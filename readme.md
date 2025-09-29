@@ -1,79 +1,105 @@
-# FastApiManagement Assignment
+# Fast Assignment – FastAPI Project
 
-A simple **FastAPI** project for managing users and sessions, with **API key authentication** and **JSON-based session storage**.
-
----
-
-## ✨ Features
-- ✅ Home route (`/`)
-- ✅ Get all users (`/getusers`)
-- ✅ Add user with API key protection (`/adduser`)
-- ✅ Session storage in JSON file (`database/session/sessions.json`)
-- ✅ Environment-based secrets using `.env`
-- ✅ Modularized utilities (`auth_utils.py`, `session_utils.py`, `libraries.py`)
+This is a simple **FastAPI** application that manages users and sessions with API key authentication.
+It demonstrates how to build modular APIs with authentication, session handling, and JSON file storage.
 
 ---
 
-## 🛠️ Setup Instructions
+## Features
 
-### 1️⃣ Clone the project
+* **FastAPI** backend with modular structure
+* **CORS middleware** enabled
+* **API Key authentication** (via request header `API-KEY`)
+* User management:
+
+  * Add users
+  * Get all users
+  * Fetch user by session ID
+* Sessions stored in `database/session/session.json`
+* Environment variables handled with `.env`
+
+---
+
+## Project Structure
+
+```
+Fast_Assignment/
+│── app/                   # Core application package
+│── data/                  # Stores users.json
+│── database/
+│   └── session/
+│       └── session.json   # Stores active sessions
+│── fastenv/               # Virtual environment (ignored in Git)
+│── main.py                # Entry point (FastAPI app)
+│── requirements.txt       # Python dependencies
+│── readme.md              # Project documentation
+│── .env                   # Environment variables (API_KEY etc.)
+│── .gitignore
+```
+
+---
+
+## Setup Instructions
+
+### 1️⃣ Clone repository
+
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/aashirzubair999/Fast_Assignment.git
 cd Fast_Assignment
-````
+```
 
-### 2️⃣ Create & activate a virtual environment
+### Create virtual environment
 
-* **Windows (cmd):**
+```bash
+python -m venv fastenv
+fastenv\Scripts\Activate.py    # On Windows
+# OR
+source fastenv/bin/activate # On Linux/Mac
+```
 
-  ```bash
-  python -m venv venv
-  venv\Scripts\activate
-  ```
-* **Windows (PowerShell):**
-
-  ```bash
-  python -m venv venv
-  .\venv\Scripts\activate
-  ```
-* **Linux/Mac:**
-
-  ```bash
-  python3 -m venv venv
-  source venv/bin/activate
-  ```
-
-> ✅ You’ll know it’s active if `(venv)` appears in your terminal.
-
-### 3️⃣ Install dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Setup environment variables
+### Configure environment variables
 
 Create a `.env` file in the root directory:
 
 ```
 API_KEY=your_secret_api_key
-SECRET_KEY=your_flask_secret_key
 ```
 
-### 5️⃣ Run the server
+---
+
+## Running the App
+
+Run the server with:
 
 ```bash
 uvicorn main:app --reload --port 5000
 ```
 
-Server will run at:
-👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)
+Now open:
+
+* Interactive API docs → [http://127.0.0.1:5000/docs](http://127.0.0.1:5000/docs)
 
 ---
 
-## 📌 API Endpoints
+## Authentication
 
-### 🏠 Home
+All protected routes require a header:
+
+```
+API-KEY: your_secret_api_key
+```
+
+---
+
+##API  Endpoints
+
+### 1) Home
 
 ```http
 GET /
@@ -82,50 +108,31 @@ GET /
 Response:
 
 ```
-Home Route
+"Home Route"
 ```
 
-### 👥 Get Users
+---
+
+### 2) Get all users
 
 ```http
 GET /getusers
 ```
 
-Response:
+Returns list of all users.
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Ali Khan",
-    "age": 24,
-    "gender": "male"
-  },
-  {
-    "id": 2,
-    "name": "Sara Ahmed",
-    "age": 22,
-    "gender": "female"
-  }
-]
-```
+---
 
-### ➕ Add User (Protected)
+### 3) Add a new user
 
 ```http
 POST /adduser
-Headers:
-  Content-Type: application/json
-  API-KEY: your_secret_api_key
-```
-
-Body:
-
-```json
+Headers: { "API-KEY": "your_secret_api_key" }
+Body (JSON):
 {
-  "name": "Fatima Noor",
-  "age": 23,
-  "gender": "female"
+  "name": "Alice",
+  "age": 25,
+  "gender": "Female"
 }
 ```
 
@@ -134,47 +141,51 @@ Response:
 ```json
 {
   "message": "User info saved",
-  "session_id": "d0fa7e2e-3d84-4b83-89c1-7e1f5e882abc"
+  "session_id": "uuid-generated-id"
 }
 ```
 
 ---
 
-## 📂 Project Structure
+### 4) Get user by session ID
 
-```
-Fast_Assignment/
-│── main.py               # Main FastAPI app
-│── auth_utils.py         # API key authentication
-│── session_utils.py      # Session file management
-│── libraries.py          # Explanation of libraries used
-│── data/
-│   └── users.json        # User data file
-│── database/
-│   └── session/
-│       └── sessions.json # Session data storage
-│── .env                  # Environment variables
-│── requirements.txt      # Python dependencies
-│── README.md             # Project documentation
+```http
+POST /getuserthroughsession
+Headers: { "API-KEY": "your_secret_api_key" }
+Body (JSON):
+{
+  "session_id": "uuid-generated-id"
+}
 ```
 
----
+Response:
 
-## 📖 Notes
-
-* `.env` and `venv/` should **not** be pushed to GitHub (add them to `.gitignore`).
-* Sessions are stored in `database/session/sessions.json`.
-* API requires the correct `API-KEY` header for protected routes.
-
----
-
-## 🧾 What is `.md`?
-
-`.md` stands for **Markdown**, a lightweight markup language used for formatting text.
-It allows you to create **styled documentation** with headings, lists, code blocks, links, etc.
+```json
+{
+  "user": {
+    "name": "Alice",
+    "age": 25,
+    "gender": "Female"
+  }
+}
+```
 
 ---
 
-✅ Now your project has a **full professional README**!
+## Requirements
 
-Do you also want me to generate the `.gitignore` file for you so that `venv/` and `.env` don’t accidentally get pushed?
+All dependencies are listed in `requirements.txt`:
+
+* fastapi
+* uvicorn
+* python-dotenv
+
+---
+
+## Notes
+
+* Sessions are stored in `database/session/session.json`.
+* Users are stored in `data/users.json`.
+* Make sure your `.env` contains a valid `API_KEY`.
+
+---
