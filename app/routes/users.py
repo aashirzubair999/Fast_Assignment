@@ -18,12 +18,12 @@ if not DATA_FILE.exists():
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     DATA_FILE.write_text("[]")
 
-
+# 1) Home Route
 @router.get("/", response_class=PlainTextResponse)
 def home():
     return "Home Route"
 
-
+# 2) Get Users Route
 @router.get("/getusers")
 def get_users():
     try:
@@ -31,11 +31,13 @@ def get_users():
             return JSONResponse(status_code=200, content=[])
         with DATA_FILE.open("r", encoding="utf-8") as f:
             users = json.load(f)
+            # Get the response in pretty format
             return PlainTextResponse(json.dumps(users, indent=4))
     except Exception as e:
+        # Log the error and return a 500 response
         raise HTTPException(status_code=500, detail=f"Error using user file {e}")
 
-
+# 3) Add User Route
 @router.post("/adduser", status_code=201)
 async def add_user(payload: AddUserIn, response: Response, authorized: bool = Depends(api_key_required)):
     try:
@@ -51,8 +53,8 @@ async def add_user(payload: AddUserIn, response: Response, authorized: bool = De
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error adding user: {e}")
 
-
-@router.post("/getuserthroughsession")
+# 4) Get User Through SessionId Route
+@router.post("/getuserthroughsessionid")
 async def get_user_through_session(payload: SessionRequest, authorized: bool = Depends(api_key_required)):
     try:
         session_id = payload.session_id
