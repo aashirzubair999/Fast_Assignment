@@ -1,0 +1,13 @@
+# virtual environment
+fastenv
+__pycache__/
+
+
+# env files
+.env
+
+
+# IDE
+.vscode/
+.idea/
+

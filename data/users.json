@@ -1,0 +1,8 @@
+[
+    { "id": 1, "name": "Ali Khan", "age": 24, "gender": "male" },
+    { "id": 2, "name": "Sara Ahmed", "age": 22, "gender": "female" },
+    { "id": 3, "name": "Omar Saeed", "age": 27, "gender": "male" },
+    { "id": 4, "name": "Fatima Noor", "age": 23, "gender": "female" },
+    { "id": 5, "name": "Zain Malik", "age": 29, "gender": "male" },
+    { "id": 6, "name": "Ayesha Rehman", "age": 21, "gender": "female" }
+]
