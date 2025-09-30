@@ -1,22 +1,7 @@
 {
-    "7f99783a-8fe6-43c2-b276-c47ed20cb87d": {
-        "name": "Ali Khan",
-        "age": 25,
-        "gender": "male"
-    },
-    "a03be52d-7b52-4f52-be50-275d3f970b04": {
+    "8728abc1-72bc-4062-b2cc-f7182070c489": {
         "name": "Muhammad Aashir",
         "age": 23,
-        "gender": "male"
-    },
-    "65b33211-9d86-4318-8f7f-82b5f17cdf07": {
-        "name": "Muhammad Aashir Zubair",
-        "age": 233,
-        "gender": "male"
-    },
-    "dac1161a-b3bd-4f28-8345-29bd6409d9da": {
-        "name": "Salar Khan",
-        "age": 30,
         "gender": "male"
     }
 }

@@ -2,8 +2,10 @@ import os
 import json
 from .config import SESSION_FILE
 
+
 # Ensure session folder exists
-os.makedirs(os.path.dirname(SESSION_FILE), exist_ok=True)
+if not os.path.exists(os.path.dirname(SESSION_FILE)):
+    os.makedirs(os.path.dirname(SESSION_FILE), exist_ok=True)
 
 # Load existing sessions or start fresh
 try:
