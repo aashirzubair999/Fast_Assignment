@@ -150,7 +150,7 @@ Response:
 ### 4) Get user by session ID
 
 ```http
-POST /getuserthroughsession
+POST /getuserthroughsessionid
 Headers: { "API-KEY": "your_secret_api_key" }
 Body (JSON):
 {
